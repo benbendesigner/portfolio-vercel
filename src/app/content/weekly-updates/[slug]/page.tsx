@@ -4,6 +4,13 @@ import FloatingNav from '@/components/FloatingNav';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import styles from './page.module.css';
 
+export async function generateStaticParams() {
+  const posts = await getAllWeeklyUpdates();
+  return posts.map((post) => ({
+    slug: post.slug,
+  }));
+}
+
 export default async function WeeklyUpdatePage({ params }: { params: { slug: string } }) {
   const post = await getWeeklyUpdateBySlug(params.slug);
 
